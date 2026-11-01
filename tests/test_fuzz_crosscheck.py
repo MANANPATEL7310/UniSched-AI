@@ -166,3 +166,4 @@ def test_fuzz_crosscheck_100_small_planted_instances():
 
     assert planted_count == 100
     assert solved_count >= 90, f"Expected >= 90 solved small planted instances, got {solved_count}"
+

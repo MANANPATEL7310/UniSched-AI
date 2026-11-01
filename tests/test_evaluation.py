@@ -129,3 +129,4 @@ def test_make_report_charts(tiny_instance, tmp_path):
     for chart_path in charts:
         assert Path(chart_path).exists()
         assert os.path.getsize(chart_path) > 0
+

@@ -60,3 +60,4 @@ export function useBenchmarkPolling(
 
   return { progress, error };
 }
+

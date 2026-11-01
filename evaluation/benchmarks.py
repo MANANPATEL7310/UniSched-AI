@@ -62,3 +62,4 @@ def run_matrix(
                     on_progress(done, total)
 
     return pd.DataFrame(rows)
+

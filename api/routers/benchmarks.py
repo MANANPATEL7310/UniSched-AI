@@ -129,3 +129,4 @@ def cancel_benchmark_endpoint(job_id: str) -> dict[str, bool]:
     """Request early cancellation of an active benchmark job (idempotent)."""
     jobs.cancel_benchmark(job_id)
     return {"ok": True}
+

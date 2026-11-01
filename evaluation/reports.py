@@ -209,3 +209,4 @@ def load_results(path: str) -> pd.DataFrame:
             raise FileNotFoundError(f"Benchmark results file '{path}' not found.")
 
     return pd.read_csv(p)
+
