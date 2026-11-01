@@ -1,6 +1,7 @@
 """CSP package for University Course Timetabling."""
 from __future__ import annotations
 
+from csp.backtracking import solve
 from csp.constraints import OccupancyKey, occupancy_keys, unary_ok
 from csp.domains import build_domains
 from csp.problem import CSPProblem, build_csp
@@ -30,7 +31,9 @@ __all__ = [
     "CSPProblem",
     "build_csp",
     "DomainState",
+    "solve",
 ]
+
 
 
 
