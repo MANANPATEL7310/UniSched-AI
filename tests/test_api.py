@@ -124,3 +124,77 @@ def test_upload_csv_text_in_number_column():
     body = res.json()
     assert body["error"]["code"] == "DATA_LOAD_ERROR"
     assert "rooms.csv row 2" in body["error"]["message"]
+
+
+def test_post_runs_tiny_and_poll_done():
+    import time
+
+    draft = load_sample("tiny")
+    payload = {
+        "draft": draft,
+        "config": {"algorithm": "A", "timeout_s": 10.0, "node_limit": None},
+    }
+    res = client.post("/api/runs", json=payload)
+    assert res.status_code == 202
+    run_id = res.json()["run_id"]
+    assert isinstance(run_id, str)
+
+    # Poll until done
+    for _ in range(50):
+        poll = client.get(f"/api/runs/{run_id}")
+        assert poll.status_code == 200
+        data = poll.json()
+        if data["state"] == "done":
+            break
+        time.sleep(0.05)
+
+    assert data["state"] == "done"
+    outcome = data["outcome"]
+    assert outcome is not None
+    assert outcome["status"] == "SOLVED"
+    assert outcome["is_valid"] is True
+    assert outcome["num_sessions"] == 5
+    assert len(outcome["timetable"]["entries"]) == 5
+
+    # Test CSV download endpoint
+    csv_res = client.get(f"/api/runs/{run_id}/timetable.csv")
+    assert csv_res.status_code == 200
+    assert "text/csv" in csv_res.headers["Content-Type"]
+    csv_text = csv_res.text
+    assert "Day,Start,End,Duration (slots),Course,Teacher,Division,Room,Session ID" in csv_text
+    assert "FAI|A|1" in csv_text
+
+
+def test_post_runs_with_input_errors():
+    draft = load_sample("tiny")
+    draft["courses"][0]["teacher_id"] = "UNKNOWN_TEACHER"
+    payload = {
+        "draft": draft,
+        "config": {"algorithm": "A", "timeout_s": 10.0, "node_limit": None},
+    }
+    res = client.post("/api/runs", json=payload)
+    assert res.status_code == 409
+    body = res.json()
+    assert body["error"]["code"] == "INPUT_ERRORS"
+    assert any(i["code"] == "UNKNOWN_TEACHER" for i in body["error"]["details"])
+
+
+def test_cancel_run_endpoint():
+    draft = load_sample("tiny")
+    payload = {
+        "draft": draft,
+        "config": {"algorithm": "A", "timeout_s": 10.0, "node_limit": None},
+    }
+    res = client.post("/api/runs", json=payload)
+    run_id = res.json()["run_id"]
+
+    cancel_res = client.post(f"/api/runs/{run_id}/cancel")
+    assert cancel_res.status_code == 200
+    assert cancel_res.json() == {"ok": True}
+
+
+def test_get_run_not_found():
+    res = client.get("/api/runs/nonexistent_id")
+    assert res.status_code == 404
+    assert res.json()["error"]["code"] == "NOT_FOUND"
+
