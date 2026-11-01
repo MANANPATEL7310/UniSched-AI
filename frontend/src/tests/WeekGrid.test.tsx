@@ -50,7 +50,7 @@ describe("WeekGrid Component", () => {
     },
   ];
 
-  it("renders time headers, day headers, and course cards", () => {
+  it("renders time headers, day headers, and course cards in blocks mode", () => {
     render(<WeekGrid entries={entries} grid={grid} visibleDays={[0, 1, 2]} />);
 
     expect(screen.getByText("Mon")).toBeInTheDocument();
@@ -65,5 +65,58 @@ describe("WeekGrid Component", () => {
     expect(screen.getByText("Physics Lab")).toBeInTheDocument();
     expect(screen.getByText("Dr. Smith")).toBeInTheDocument();
     expect(screen.getByText("Prof. Einstein")).toBeInTheDocument();
+
+    // Verify 2-slot lab card indicates duration
+    expect(screen.getByText("2 slots")).toBeInTheDocument();
+  });
+
+  it("renders detailed title tooltip for accessibility", () => {
+    render(<WeekGrid entries={entries} grid={grid} visibleDays={[0, 1, 2]} />);
+
+    const aiCard = screen.getByText("Intro to AI").closest(".weekgrid-card");
+    expect(aiCard).toBeDefined();
+    expect(aiCard).toHaveAttribute(
+      "title",
+      expect.stringContaining("Intro to AI (FAI)")
+    );
+    expect(aiCard).toHaveAttribute(
+      "title",
+      expect.stringContaining("Teacher: Dr. Smith (T1)")
+    );
+    expect(aiCard).toHaveAttribute(
+      "title",
+      expect.stringContaining("Room: Room 101 (R101)")
+    );
+  });
+
+  it("switches to stacked mode when sessions overlap at the same day and slot", () => {
+    const overlappingEntries: Entry[] = [
+      entries[0],
+      {
+        session_id: "MATH|B|1",
+        course_id: "MATH",
+        course_name: "Discrete Math",
+        teacher_id: "T3",
+        teacher_name: "Dr. Euler",
+        division_id: "B",
+        division_name: "Div B",
+        room_id: "R103",
+        room_name: "Room 103",
+        day: 0, // Same day
+        day_name: "Mon",
+        start_slot: 0, // Same slot!
+        end_slot: 1,
+        start_time: "09:00",
+        end_time: "10:00",
+        duration_slots: 1,
+      },
+    ];
+
+    render(<WeekGrid entries={overlappingEntries} grid={grid} visibleDays={[0, 1, 2]} />);
+
+    // In stacked mode, both overlapping entries should be visible
+    expect(screen.getByText("Intro to AI")).toBeInTheDocument();
+    expect(screen.getByText("Discrete Math")).toBeInTheDocument();
+    expect(screen.getByText(/Dr\. Euler/)).toBeInTheDocument();
   });
 });
