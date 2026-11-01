@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from api.routers import instances, samples
+from api.routers import instances, runs, samples
 from errors import (
     BusyError,
     DataLoadError,
@@ -110,6 +110,7 @@ def health() -> dict[str, str]:
 # --- Include Routers ---
 app.include_router(samples.router, prefix="/api")
 app.include_router(instances.router, prefix="/api")
+app.include_router(runs.router, prefix="/api")
 
 # --- Optional static mount for frontend production build ---
 dist_path = Path("frontend/dist")
