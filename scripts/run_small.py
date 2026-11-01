@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CLI utility to execute Config A search on small and named instances."""
+"""CLI utility to execute CSP search configs on small and named instances."""
 from __future__ import annotations
 
 import argparse
@@ -15,11 +15,11 @@ from data.loader import instance_from_draft, list_samples, load_sample
 from scheduling.scheduler import generate_timetable
 
 
-def run_instance(name: str, verbose: bool = True) -> bool:
+def run_instance(name: str, algorithm: str = "A", verbose: bool = True) -> bool:
     """Run search on a single sample instance and verify outcome against expected.json."""
     if verbose:
         print(f"\n{'=' * 60}")
-        print(f"Running Config A on: {name}")
+        print(f"Running Config {algorithm} on: {name}")
         print(f"{'=' * 60}")
 
     try:
@@ -38,7 +38,8 @@ def run_instance(name: str, verbose: bool = True) -> bool:
         except Exception:
             pass
 
-    outcome = generate_timetable(instance, PRESETS["A"])
+    config = PRESETS.get(algorithm, PRESETS["A"])
+    outcome = generate_timetable(instance, config)
     status_str = outcome.status.value
 
     print(f"  Status:       {status_str}")
@@ -66,12 +67,19 @@ def run_instance(name: str, verbose: bool = True) -> bool:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run Config A timetable search.")
+    parser = argparse.ArgumentParser(description="Run timetable search on sample instances.")
     parser.add_argument(
         "--sample",
         type=str,
         default="tiny",
         help="Specific sample folder name to run, or 'all'",
+    )
+    parser.add_argument(
+        "--algorithm",
+        type=str,
+        default="A",
+        choices=["A", "B", "C", "D"],
+        help="Search algorithm preset to run (default: A)",
     )
     args = parser.parse_args()
 
@@ -79,12 +87,12 @@ def main() -> int:
         samples = list_samples()
         all_ok = True
         for s in samples:
-            ok = run_instance(s.name)
+            ok = run_instance(s.name, algorithm=args.algorithm)
             if not ok:
                 all_ok = False
         return 0 if all_ok else 1
     else:
-        ok = run_instance(args.sample)
+        ok = run_instance(args.sample, algorithm=args.algorithm)
         return 0 if ok else 1
 
 

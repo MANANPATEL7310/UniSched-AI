@@ -4,6 +4,7 @@ from __future__ import annotations
 from csp.backtracking import solve
 from csp.constraints import OccupancyKey, occupancy_keys, unary_ok
 from csp.domains import build_domains
+from csp.heuristics import count_legal, lcv_score, order_values, select_variable
 from csp.problem import CSPProblem, build_csp
 from csp.result import (
     PRESETS,
@@ -32,6 +33,10 @@ __all__ = [
     "build_csp",
     "DomainState",
     "solve",
+    "count_legal",
+    "select_variable",
+    "lcv_score",
+    "order_values",
 ]
 
 
