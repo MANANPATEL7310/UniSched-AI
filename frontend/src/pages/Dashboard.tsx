@@ -1,6 +1,7 @@
 import { useApp } from "../state/AppContext.js";
 import { StatusBanner } from "../components/StatusBanner.js";
 import { MetricCards, type MetricItem } from "../components/MetricCards.js";
+import { Link } from "react-router-dom";
 
 export function Dashboard() {
   const { state } = useApp();
@@ -38,17 +39,23 @@ export function Dashboard() {
 
   return (
     <div>
-      <div className="page-header">
-        <h1 className="page-title">Intelligent University Timetable Scheduler</h1>
-        <p className="page-caption">
-          Constraint Satisfaction: backtracking, MRV, Degree, LCV, Forward Checking,
-          AC-3/MAC — Fundamentals of AI
-        </p>
+      <div className="dashboard-hero">
+        <div><div className="eyebrow"><span className="live-dot" /> YOUR SCHEDULING DESK</div>
+          <h1 className="page-title">A calmer way to plan the week.</h1>
+          <p className="page-caption">Bring classes, faculty, and rooms together in one clear weekly plan.</p>
+          <div className="hero-actions"><Link className="btn btn-primary" to="/generate">Build a timetable <span aria-hidden="true">→</span></Link><Link className="btn btn-secondary" to="/data">Review your data</Link></div>
+        </div>
+        <div className="hero-note"><span className="hero-note-label">PLANNING WITH</span><strong>Clear rules.<br/>Thoughtful choices.</strong><span>Every placement can be checked and explained.</span></div>
       </div>
 
       <StatusBanner />
 
       <MetricCards items={statItems} />
+
+      {outcome?.timetable && <section className="panel overview-schedule">
+        <div className="section-heading"><div><span className="eyebrow">A LOOK AT THE WEEK</span><h2 className="panel-title">Your sample timetable</h2><p className="page-caption">A real, hand-verified 5-session example is ready to explore.</p></div><Link className="text-link" to="/viewer">Open weekly view <span aria-hidden="true">→</span></Link></div>
+        <div className="agenda-preview">{outcome.timetable.entries.slice(0, 4).map((entry) => <div className="agenda-row" key={entry.session_id}><span className="agenda-time">{entry.day_name}<small>{entry.start_time}</small></span><span className="agenda-accent"/><div className="agenda-detail"><strong>{entry.course_name}</strong><span>{entry.teacher_name} · {entry.room_name}</span></div><span className="agenda-cohort">{entry.division_name}</span></div>)}</div>
+      </section>}
 
       {/* Latest search result card */}
       {outcome && (
