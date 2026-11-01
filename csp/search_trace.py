@@ -25,3 +25,4 @@ class TraceEvent:
     value_label: str
     note: str = ""
     depth: int = 0
+

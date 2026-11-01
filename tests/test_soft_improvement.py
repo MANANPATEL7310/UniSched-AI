@@ -43,3 +43,4 @@ def test_soft_improvement_rejects_invalid_timetable() -> None:
 
     with pytest.raises(ValueError, match="Cannot optimize soft constraints on an invalid timetable"):
         improve_soft_constraints(inst, corrupt_tt)
+

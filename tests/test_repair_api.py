@@ -64,3 +64,4 @@ def test_api_improve_soft_endpoint() -> None:
     assert data["status"] in ("IMPROVED", "UNCHANGED")
     assert data["improved_penalty"] <= data["initial_penalty"]
     assert data["outcome"]["is_valid"] is True
+
