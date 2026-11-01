@@ -115,3 +115,4 @@ def test_mac_propagation_pruning_and_backtrack_restore():
     ctx.state.restore(mark)
     snapshot_after = ctx.state.snapshot()
     assert snapshot_after == snapshot_before
+

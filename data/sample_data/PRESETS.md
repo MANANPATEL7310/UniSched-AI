@@ -59,3 +59,4 @@ These values are generated deterministically by `data.generator.generate_instanc
 
 ## Seed Reproducibility
 Every synthetic instance is constructed using `random.Random(cfg.seed)`. When identical `GeneratorConfig` configurations are supplied, the output instances and their planted solutions are strictly identical.
+

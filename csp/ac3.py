@@ -91,3 +91,4 @@ def root_arcs(problem: CSPProblem) -> list[tuple[str, str]]:
 def ac3_root(ctx: _Ctx) -> bool:
     """Perform root-level AC-3 arc consistency preprocessing before search begins."""
     return ac3(ctx, root_arcs(ctx.problem), count_as="root")
+

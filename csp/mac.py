@@ -45,3 +45,4 @@ def mac_propagate(ctx: _Ctx, sid: str, i: int) -> bool:
         return True
 
     return ac3(ctx, arcs, count_as="search")
+
