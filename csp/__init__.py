@@ -13,6 +13,7 @@ from csp.result import (
     SearchResult,
     SearchStatus,
 )
+from csp.trail import DomainState
 
 __all__ = [
     "SearchStatus",
@@ -28,7 +29,9 @@ __all__ = [
     "build_domains",
     "CSPProblem",
     "build_csp",
+    "DomainState",
 ]
+
 
 
 
