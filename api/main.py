@@ -114,7 +114,20 @@ app.include_router(runs.router, prefix="/api")
 app.include_router(generator.router, prefix="/api")
 app.include_router(generator.router)
 
-# --- Optional static mount for frontend production build ---
+# --- Static mount and SPA fallback for frontend production build ---
 dist_path = Path("frontend/dist")
 if dist_path.exists():
-    app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="frontend")
+    from fastapi.responses import FileResponse
+
+    assets_path = dist_path / "assets"
+    if assets_path.exists():
+        app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="frontend-assets")
+
+    @app.get("/{full_path:path}", include_in_schema=False)
+    def serve_spa(full_path: str):
+        if full_path == "api" or full_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="API endpoint not found")
+        file_path = dist_path / full_path
+        if full_path and file_path.is_file():
+            return FileResponse(file_path)
+        return FileResponse(dist_path / "index.html")
