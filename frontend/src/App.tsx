@@ -8,14 +8,16 @@ import { Viewer } from "./pages/Viewer.js";
 import { Validation } from "./pages/Validation.js";
 import { Comparison } from "./pages/Comparison.js";
 import { Repair } from "./pages/Repair.js";
+import { Landing } from "./pages/Landing.js";
 
 export function App() {
   return (
     <AppProvider>
       <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="*" element={<Layout><Routes>
+            <Route path="/workspace" element={<Dashboard />} />
             <Route path="/data" element={<DataManagement />} />
             <Route path="/generate" element={<Generate />} />
             <Route path="/viewer" element={<Viewer />} />
@@ -23,8 +25,8 @@ export function App() {
             <Route path="/comparison" element={<Comparison />} />
             <Route path="/repair" element={<Repair />} />
             <Route path="*" element={<Dashboard />} />
-          </Routes>
-        </Layout>
+          </Routes></Layout>} />
+        </Routes>
       </BrowserRouter>
     </AppProvider>
   );

@@ -4,10 +4,10 @@ import { deriveStatus } from "../lib/status.js";
 import { useEffect, useState } from "react";
 
 const NAV_ITEMS = [
-  { to: "/", label: "Overview", icon: "01" },
-  { to: "/data", label: "Instance data", icon: "02" },
-  { to: "/generate", label: "Build a timetable", icon: "03" },
-  { to: "/viewer", label: "Weekly timetable", icon: "04" },
+  { to: "/workspace", label: "Overview", icon: "01" },
+  { to: "/data", label: "Set up data", icon: "02" },
+  { to: "/generate", label: "Build schedule", icon: "03" },
+  { to: "/viewer", label: "Review timetable", icon: "04" },
   { to: "/validation", label: "Check constraints", icon: "05" },
   { to: "/comparison", label: "Compare methods", icon: "06" },
   { to: "/repair", label: "Repair schedule", icon: "07" },
@@ -35,7 +35,7 @@ export function Sidebar() {
           <NavLink
             key={item.to}
             to={item.to}
-            end={item.to === "/"}
+            end={item.to === "/workspace"}
             className={({ isActive }) =>
               `nav-link ${isActive ? "active" : ""}`
             }
@@ -47,6 +47,10 @@ export function Sidebar() {
       </nav>
 
       <div className="sidebar-footer">
+        <NavLink to="/" end className="nav-link landing-return-link">
+          <span className="nav-index" aria-hidden="true">↖</span>
+          <span>Back to landing page</span>
+        </NavLink>
         <button className="theme-toggle" type="button" onClick={() => setTheme(theme === "light" ? "dark" : "light")} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}>
           <span className="theme-dot" />{theme === "light" ? "Light appearance" : "Dark appearance"}<span className="theme-switch">{theme === "light" ? "☼" : "☾"}</span>
         </button>

@@ -287,6 +287,7 @@ export function Generate() {
             );
           })}
         </div>
+        <p className="solver-tip"><strong>Not sure where to start?</strong> Use Config A for an easy first run. If your schedule is tightly packed, Config D checks more possibilities for conflicts as it works.</p>
 
         {/* 3. Limits & Controls */}
         <div className="limits-row">
@@ -345,10 +346,10 @@ export function Generate() {
           >
             <div>
               <h2 className="card-title" style={{ margin: 0 }}>
-                Run Outcome: Config {outcome.algorithm}
+                Schedule result
               </h2>
               <span className="card-subtitle">
-                Run ID: {outcome.run_id} • Status: {outcome.status}
+                {outcome.is_valid ? "Every required session was placed and passed the independent checks." : outcome.status === "INFEASIBLE_PROVEN" ? "No schedule fits the current rules. Review the constraints or try adjusting the data." : "The search stopped before confirming a complete schedule."}
               </span>
             </div>
             <div>

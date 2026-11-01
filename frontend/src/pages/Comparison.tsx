@@ -31,10 +31,10 @@ import { aggregateRows, seriesFor, type SeriesPoint } from "../lib/aggregate.js"
 import { useApp } from "../state/AppContext.js";
 
 const ALGO_COLORS: Record<string, string> = {
-  A: "#94a3b8", // Slate / Gray
-  B: "#3b82f6", // Blue
-  C: "#10b981", // Emerald Green
-  D: "#8b5cf6", // Purple
+  A: "#a88a83",
+  B: "#e85d24",
+  C: "#718c72",
+  D: "#d99a32",
 };
 
 export function Comparison() {
