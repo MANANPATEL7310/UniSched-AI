@@ -1,6 +1,7 @@
 """CSP package for University Course Timetabling."""
 from __future__ import annotations
 
+from csp.ac3 import ac3, ac3_root, revise, root_arcs
 from csp.backtracking import solve
 from csp.constraints import OccupancyKey, occupancy_keys, unary_ok
 from csp.domains import build_domains
@@ -34,6 +35,10 @@ __all__ = [
     "build_csp",
     "DomainState",
     "solve",
+    "ac3",
+    "ac3_root",
+    "revise",
+    "root_arcs",
     "forward_check",
     "count_legal",
     "select_variable",

@@ -5,6 +5,7 @@ import sys
 from time import perf_counter
 from typing import TYPE_CHECKING, Callable
 
+from csp.ac3 import ac3_root
 from csp.constraints import OccupancyKey
 from csp.forward_checking import forward_check
 from csp.heuristics import order_values, select_variable
@@ -98,7 +99,7 @@ _select_variable_fn: Callable[[_Ctx], str] = select_variable
 _order_values_fn: Callable[[_Ctx, str], list[int]] = order_values
 _forward_check_fn: Callable[[_Ctx, str, int], bool] = forward_check
 _mac_propagate_fn: Callable[[_Ctx, str, int], bool] | None = None
-_ac3_root_fn: Callable[[_Ctx], bool] | None = None
+_ac3_root_fn: Callable[[_Ctx], bool] = ac3_root
 
 
 def _search(ctx: _Ctx) -> bool:
