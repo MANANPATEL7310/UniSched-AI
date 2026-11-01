@@ -1,0 +1,153 @@
+{
+  "run_id": "fixture-tiny-run",
+  "algorithm": "A",
+  "status": "SOLVED",
+  "message": "Solved successfully (hand-verified fixture)",
+  "is_valid": true,
+  "num_sessions": 5,
+  "metrics": {
+    "nodes": 0,
+    "attempts": 0,
+    "backtracks": 0,
+    "checks": 0,
+    "values_pruned": 0,
+    "root_pruned": 0,
+    "domain_wipeouts": 0,
+    "runtime_s": 0.012,
+    "build_s": 0.003,
+    "peak_memory_kb": null
+  },
+  "timetable": {
+    "grid": {
+      "day_names": [
+        "Mon",
+        "Tue"
+      ],
+      "slot_starts": [
+        "09:00",
+        "10:00",
+        "11:00"
+      ],
+      "slot_ends": [
+        "10:00",
+        "11:00",
+        "12:00"
+      ]
+    },
+    "entries": [
+      {
+        "session_id": "MATH|B|1",
+        "course_id": "MATH",
+        "course_name": "Discrete Math",
+        "teacher_id": "T02",
+        "teacher_name": "Dr. Sharma",
+        "division_id": "B",
+        "division_name": "Division B",
+        "room_id": "R102",
+        "room_name": "Room 102",
+        "day": 0,
+        "day_name": "Mon",
+        "start_slot": 0,
+        "end_slot": 0,
+        "start_time": "09:00",
+        "end_time": "10:00",
+        "duration_slots": 1
+      },
+      {
+        "session_id": "FAI|A|1",
+        "course_id": "FAI",
+        "course_name": "Foundation of AI",
+        "teacher_id": "T01",
+        "teacher_name": "Dr. Rao",
+        "division_id": "A",
+        "division_name": "Division A",
+        "room_id": "R101",
+        "room_name": "Room 101",
+        "day": 0,
+        "day_name": "Mon",
+        "start_slot": 1,
+        "end_slot": 1,
+        "start_time": "10:00",
+        "end_time": "11:00",
+        "duration_slots": 1
+      },
+      {
+        "session_id": "PLAB|A|1",
+        "course_id": "PLAB",
+        "course_name": "Python Lab",
+        "teacher_id": "T03",
+        "teacher_name": "Prof. Lee",
+        "division_id": "A",
+        "division_name": "Division A",
+        "room_id": "C101",
+        "room_name": "Lab 101",
+        "day": 0,
+        "day_name": "Mon",
+        "start_slot": 2,
+        "end_slot": 2,
+        "start_time": "11:00",
+        "end_time": "12:00",
+        "duration_slots": 1
+      },
+      {
+        "session_id": "FAI|A|2",
+        "course_id": "FAI",
+        "course_name": "Foundation of AI",
+        "teacher_id": "T01",
+        "teacher_name": "Dr. Rao",
+        "division_id": "A",
+        "division_name": "Division A",
+        "room_id": "R101",
+        "room_name": "Room 101",
+        "day": 1,
+        "day_name": "Tue",
+        "start_slot": 0,
+        "end_slot": 0,
+        "start_time": "09:00",
+        "end_time": "10:00",
+        "duration_slots": 1
+      },
+      {
+        "session_id": "MATH|A|1",
+        "course_id": "MATH",
+        "course_name": "Discrete Math",
+        "teacher_id": "T02",
+        "teacher_name": "Dr. Sharma",
+        "division_id": "A",
+        "division_name": "Division A",
+        "room_id": "R101",
+        "room_name": "Room 101",
+        "day": 1,
+        "day_name": "Tue",
+        "start_slot": 1,
+        "end_slot": 1,
+        "start_time": "10:00",
+        "end_time": "11:00",
+        "duration_slots": 1
+      }
+    ]
+  },
+  "validation": {
+    "is_valid": true,
+    "sessions_required": 5,
+    "sessions_assigned": 5,
+    "counts_by_type": {
+      "MISSING_SESSION": 0,
+      "DUPLICATE_SESSION": 0,
+      "UNKNOWN_SESSION": 0,
+      "TEACHER_CONFLICT": 0,
+      "DIVISION_CONFLICT": 0,
+      "ROOM_CONFLICT": 0,
+      "CAPACITY": 0,
+      "ROOM_TYPE": 0,
+      "TEACHER_UNAVAILABLE": 0,
+      "ROOM_UNAVAILABLE": 0,
+      "DURATION": 0,
+      "OUT_OF_RANGE": 0,
+      "UNKNOWN_ROOM": 0,
+      "FIXED_ASSIGNMENT": 0
+    },
+    "violations": []
+  },
+  "soft": null
+}
