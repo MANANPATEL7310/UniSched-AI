@@ -228,3 +228,4 @@ The repository includes six hand-crafted named instances in `data/sample_data/` 
 
 ## 📜 License
 Developed as part of the Foundations of Artificial Intelligence (FAI) curriculum.
+

@@ -236,3 +236,44 @@ class RunResponseModel(_M):
     progress: ProgressModel
     outcome: RunOutcomeModel | None = None
     error: ApiErrorDetail | None = None
+
+
+class BenchmarkRowModel(_M):
+    instance: str
+    size_label: str
+    num_sessions: int
+    seed: int
+    algorithm: Literal["A", "B", "C", "D"]
+    status: str
+    solved: bool
+    valid: bool
+    runtime_s: float
+    build_s: float
+    nodes: int
+    attempts: int
+    backtracks: int
+    checks: int
+    values_pruned: int
+    domain_wipeouts: int | None = None
+    root_pruned: int | None = None
+    peak_memory_kb: float | None = None
+    hard_violations: int
+    soft_penalty: float | None = None
+    timeout_s: float | None = None
+
+
+class BenchmarkResponseModel(_M):
+    job_id: str
+    state: Literal["running", "done", "error"]
+    done: int
+    total: int
+    rows: list[BenchmarkRowModel] | None = None
+    meta: dict[str, Any] | None = None
+    error: ApiErrorDetail | None = None
+
+
+class SavedResultInfoModel(_M):
+    name: str
+    created: str
+    rows: int
+

@@ -81,3 +81,4 @@ def test_nothing_outside_api_imports_fastapi():
             assert not module.startswith("fastapi"), (
                 f"{py_file}:{lineno} illegal import of 'fastapi' outside api package"
             )
+

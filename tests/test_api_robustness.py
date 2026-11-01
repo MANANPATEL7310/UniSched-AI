@@ -127,3 +127,4 @@ def test_single_command_spa_serving():
     assert res_bad_api.status_code == 404
     assert res_bad_api.headers.get("content-type", "").startswith("application/json")
     assert "error" in res_bad_api.json()
+
