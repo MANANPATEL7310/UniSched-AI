@@ -1,0 +1,3 @@
+room_id,room_name,room_type,capacity,unavailable_slots
+R101,Room 101,lecture,50,Tue@10:00
+R102,Room 102,lecture,50,Mon@10:00

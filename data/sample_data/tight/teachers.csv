@@ -1,0 +1,4 @@
+teacher_id,teacher_name,unavailable_slots,preferred_slots,max_daily_sessions
+T01,Dr. Rao,Tue@09:00;Tue@10:00,,
+T02,Dr. Sharma,Mon@09:00;Mon@10:00,,
+T03,Prof. Lee,Mon@11:00;Tue@11:00,,

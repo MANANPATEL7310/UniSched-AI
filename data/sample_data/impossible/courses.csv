@@ -1,0 +1,2 @@
+course_id,course_name,teacher_id,sessions_per_week,duration_slots,room_types,eligible_divisions
+X,Course X,T01,2,1,lecture,A

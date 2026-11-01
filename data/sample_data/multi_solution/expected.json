@@ -1,0 +1,4 @@
+{
+  "expected_status": "SOLVED",
+  "notes": "9 time slots x 4 rooms = 36 positions. C01 has 36 choices, C02 has 35 non-clashing choices, yielding 1,260 distinct valid solutions."
+}

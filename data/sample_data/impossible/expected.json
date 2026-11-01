@@ -1,0 +1,4 @@
+{
+  "expected_status": "INFEASIBLE_PROVEN",
+  "notes": "T01 has 2 sessions (X|A|1, X|A|2) but is only available in 1 time slot (Mon@09:00). Both variables have non-empty initial domains, but cannot both be scheduled without teacher conflict."
+}

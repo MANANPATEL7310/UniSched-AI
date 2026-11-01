@@ -1,0 +1,7 @@
+course_id,course_name,teacher_id,sessions_per_week,duration_slots,room_types,eligible_divisions
+C01,AI-1,T01,1,1,lecture,A
+C02,AI-2,T01,1,1,lecture,A
+C03,Math-1,T02,1,1,lecture,A
+C04,Math-2,T02,1,1,lecture,B
+C05,CS-1,T03,1,1,lecture,B
+C06,CS-2,T03,1,1,lecture,B

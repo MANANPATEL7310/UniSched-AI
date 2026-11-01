@@ -1,0 +1,3 @@
+room_id,room_name,room_type,capacity,unavailable_slots
+C101,Computer Lab,computer_lab,40,Mon@10:00
+R101,Lecture Hall,lecture,60,

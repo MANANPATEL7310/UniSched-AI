@@ -1,0 +1,3 @@
+course_id,course_name,teacher_id,sessions_per_week,duration_slots,room_types,eligible_divisions
+C01,North Course,T01,1,1,lecture,A
+C02,South Course,T02,1,1,lecture,B

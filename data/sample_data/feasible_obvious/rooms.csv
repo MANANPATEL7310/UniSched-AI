@@ -1,0 +1,4 @@
+room_id,room_name,room_type,capacity,unavailable_slots
+R101,Room 101,lecture,60,
+R102,Room 102,lecture,60,
+R103,Room 103,lecture,60,

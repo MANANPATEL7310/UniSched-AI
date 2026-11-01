@@ -1,0 +1,4 @@
+{
+  "expected_status": "SOLVED",
+  "notes": "C01 has domain size 1 (Mon@10:00 in R101) and C02 has domain size 1 (Tue@10:00 in R102). Exactly 1 unique solution exists."
+}
