@@ -9,6 +9,7 @@ from csp.ac3 import ac3_root
 from csp.constraints import OccupancyKey
 from csp.forward_checking import forward_check
 from csp.heuristics import order_values, select_variable
+from csp.mac import mac_propagate
 from csp.result import (
     PRESETS,
     RunControl,
@@ -98,7 +99,7 @@ def _order_values_default(ctx: _Ctx, sid: str) -> list[int]:
 _select_variable_fn: Callable[[_Ctx], str] = select_variable
 _order_values_fn: Callable[[_Ctx, str], list[int]] = order_values
 _forward_check_fn: Callable[[_Ctx, str, int], bool] = forward_check
-_mac_propagate_fn: Callable[[_Ctx, str, int], bool] | None = None
+_mac_propagate_fn: Callable[[_Ctx, str, int], bool] = mac_propagate
 _ac3_root_fn: Callable[[_Ctx], bool] = ac3_root
 
 

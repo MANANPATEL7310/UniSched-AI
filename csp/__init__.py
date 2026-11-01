@@ -7,6 +7,7 @@ from csp.constraints import OccupancyKey, occupancy_keys, unary_ok
 from csp.domains import build_domains
 from csp.forward_checking import forward_check
 from csp.heuristics import count_legal, lcv_score, order_values, select_variable
+from csp.mac import mac_propagate
 from csp.problem import CSPProblem, build_csp
 from csp.result import (
     PRESETS,
@@ -40,6 +41,7 @@ __all__ = [
     "revise",
     "root_arcs",
     "forward_check",
+    "mac_propagate",
     "count_legal",
     "select_variable",
     "lcv_score",
