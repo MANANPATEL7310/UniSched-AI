@@ -53,3 +53,4 @@ def generate_draft(body: GeneratorConfigModel) -> dict[str, Any]:
     draft = draft_from_instance(instance)
     draft["name"] = cfg.name
     return draft
+

@@ -348,3 +348,4 @@ def generate_instance(cfg: GeneratorConfig) -> SchedulingInstance:
         sessions=sessions,
         meta=meta,
     )
+

@@ -112,3 +112,4 @@ def test_api_generate_instance_and_validate():
     assert val_data["parse_error"] is None
     assert len(val_data["issues"]) == 0
     assert val_data["summary"]["sessions"] > 0
+

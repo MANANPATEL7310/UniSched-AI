@@ -107,3 +107,4 @@ def order_values(ctx: _Ctx, sid: str) -> list[int]:
     # Sort by score ascending, breaking ties by value index i ascending
     scored.sort(key=lambda pair: (pair[0], pair[1]))
     return [i for _, i in scored]
+
