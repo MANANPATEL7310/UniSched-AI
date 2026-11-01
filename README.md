@@ -226,6 +226,16 @@ The repository includes six hand-crafted named instances in `data/sample_data/` 
 
 ---
 
+## 📚 Project Documentation & Reports
+
+Detailed technical documentation and evaluation guides are available in the [`docs/`](docs/) directory:
+
+* **[FAI Concepts & Theoretical Mapping](docs/FAI_CONCEPTS.md):** Formal PEAS breakdown, 6 environment properties, state-space formulation, CSP $(X, D, C)$ model, and step-by-step hand-worked examples for Algorithms A–D.
+* **[Comprehensive Academic Project Report](docs/PROJECT_REPORT.md):** Full academic report containing system architecture, empirical benchmark results, comparative analysis tables, and discussion of findings.
+* **[Live Demonstration & Evaluation Guide](docs/DEMO_GUIDE.md):** Complete step-by-step viva presentation script walking through data loading, pre-flight validation, live solving, weekly timetable viewer, independent validation, and AC-3 unsat proofs.
+
+---
+
 ## 📜 License
 Developed as part of the Foundations of Artificial Intelligence (FAI) curriculum.
 
