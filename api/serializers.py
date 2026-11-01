@@ -164,3 +164,21 @@ def outcome_to_dto(outcome: Any, run_id: str, algorithm: str) -> dict[str, Any]:
         "validation": validation_to_dto(outcome.validation),
         "soft": soft_to_dto(outcome.soft),
     }
+
+
+def diff_to_dto(d: Any) -> dict[str, Any]:
+    """Serialize a SessionDiff to a dictionary."""
+    return {
+        "session_id": d.session_id,
+        "course_name": d.course_name,
+        "division_name": d.division_name,
+        "teacher_name": d.teacher_name,
+        "old_day": d.old_day,
+        "old_slot": d.old_slot,
+        "old_room_id": d.old_room_id,
+        "new_day": d.new_day,
+        "new_slot": d.new_slot,
+        "new_room_id": d.new_room_id,
+        "change_type": d.change_type,
+    }
+

@@ -296,6 +296,34 @@ export function Viewer() {
           >
             Filtered CSV
           </button>
+
+          <button
+            type="button"
+            className="btn btn-secondary"
+            style={{ padding: "5px 12px", fontSize: "0.8rem" }}
+            onClick={() => {
+              if (!state.outcome?.timetable || !state.draft) return;
+              const assignments: Record<string, [number, number, string]> = {};
+              for (const e of state.outcome.timetable.entries) {
+                assignments[e.session_id] = [e.day, e.start_slot, e.room_id];
+              }
+              const jsonObj = {
+                instance_name: state.draft.name,
+                assignments,
+              };
+              const blob = new Blob([JSON.stringify(jsonObj, null, 2)], {
+                type: "application/json",
+              });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = `${state.draft.name}_timetable.json`;
+              a.click();
+              URL.revokeObjectURL(url);
+            }}
+          >
+            Export JSON
+          </button>
         </div>
       </div>
 

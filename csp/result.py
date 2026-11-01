@@ -4,8 +4,12 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import Enum
 import threading
+from typing import TYPE_CHECKING
 
 from models.assignment import Assignment
+
+if TYPE_CHECKING:
+    from csp.search_trace import TraceEvent
 
 
 class SearchStatus(Enum):
@@ -100,3 +104,5 @@ class SearchResult:
     metrics: SearchMetrics
     config: SearchConfig
     message: str
+    trace: list[TraceEvent] | None = None
+    trace_truncated: bool = False

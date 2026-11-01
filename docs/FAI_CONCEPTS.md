@@ -214,3 +214,4 @@ $$\text{Constraint } C(s_a, s_b): \quad \text{keys}(s_a, v_a) \cap \text{keys}(s
 | **Determinism** | Sensitive to weights, seeds, temperature, and floating-point stochasticity. | **Strictly deterministic.** Same input + config always produces the exact same schedule. |
 | **Explainability** | Black-box weights and opaque embeddings. | Transparent variable selections, domain pruning counts, and constraint explanations. |
 | **Data Requirements** | Requires thousands of historic training schedules. | **Zero training data required.** Operates purely from first principles on institutional constraint specifications. |
+

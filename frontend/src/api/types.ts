@@ -271,3 +271,76 @@ export interface SampleInfo {
   name: string;
   description: string;
 }
+
+// --- Stage 6 Repair & Local Optimization Types ---
+
+export interface TimetableDraft {
+  instance_name: string;
+  assignments: Record<string, [number, number, string]>;
+}
+
+export type RepairChangeType = "teacher_unavailable" | "room_unavailable";
+
+export interface RepairChange {
+  type: RepairChangeType;
+  entity_id: string;
+  day: number;
+  slot: number;
+}
+
+export type LockPolicy = "strict" | "relax_neighbors" | "free";
+
+export interface RepairRequest {
+  draft: InstanceDraft;
+  published: TimetableDraft;
+  change: RepairChange;
+  lock_policy?: LockPolicy;
+  timeout_s?: number;
+}
+
+export type SessionChangeType =
+  | "UNCHANGED"
+  | "MOVED_SLOT"
+  | "MOVED_ROOM"
+  | "MOVED_BOTH"
+  | "NEWLY_ASSIGNED";
+
+export interface SessionDiff {
+  session_id: string;
+  course_name: string;
+  division_name: string;
+  teacher_name: string;
+  old_day: number | null;
+  old_slot: number | null;
+  old_room_id: string | null;
+  new_day: number;
+  new_slot: number;
+  new_room_id: string;
+  change_type: SessionChangeType;
+}
+
+export interface RepairResponse {
+  status: string;
+  outcome: RunOutcome | null;
+  diff: SessionDiff[];
+  relaxed_locks: string[];
+  change_penalty: number;
+  message: string;
+}
+
+export interface SoftImproveRequest {
+  draft: InstanceDraft;
+  published: TimetableDraft;
+  max_steps?: number;
+  time_limit_s?: number;
+}
+
+export interface SoftImproveResponse {
+  status: string;
+  initial_penalty: number;
+  improved_penalty: number;
+  steps_accepted: number;
+  outcome: RunOutcome;
+  message: string;
+}
+

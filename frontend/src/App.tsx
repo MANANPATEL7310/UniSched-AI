@@ -7,6 +7,7 @@ import { Generate } from "./pages/Generate.js";
 import { Viewer } from "./pages/Viewer.js";
 import { Validation } from "./pages/Validation.js";
 import { Comparison } from "./pages/Comparison.js";
+import { Repair } from "./pages/Repair.js";
 
 export function App() {
   return (
@@ -20,6 +21,7 @@ export function App() {
             <Route path="/viewer" element={<Viewer />} />
             <Route path="/validation" element={<Validation />} />
             <Route path="/comparison" element={<Comparison />} />
+            <Route path="/repair" element={<Repair />} />
             <Route path="*" element={<Dashboard />} />
           </Routes>
         </Layout>

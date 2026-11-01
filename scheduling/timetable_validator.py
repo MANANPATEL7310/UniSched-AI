@@ -88,7 +88,11 @@ def validate_timetable(
     # 1. Normalise input into a list of (session_id, assignment) pairs
     raw_pairs: list[tuple[str, Any]] = []
     try:
-        if isinstance(assignment, Mapping):
+        if hasattr(assignment, "assignment") and isinstance(getattr(assignment, "assignment"), Mapping):
+            raw_pairs = list(getattr(assignment, "assignment").items())
+        elif hasattr(assignment, "assignments") and isinstance(getattr(assignment, "assignments"), Mapping):
+            raw_pairs = list(getattr(assignment, "assignments").items())
+        elif isinstance(assignment, Mapping):
             raw_pairs = list(assignment.items())
         elif isinstance(assignment, Iterable):
             for item in assignment:

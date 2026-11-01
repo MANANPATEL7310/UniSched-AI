@@ -14,7 +14,7 @@ from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 from api.jobs import jobs
-from api.routers import benchmarks, generator, instances, runs, samples
+from api.routers import benchmarks, generator, instances, repair, runs, samples
 from errors import (
     BusyError,
     DataLoadError,
@@ -124,6 +124,8 @@ app.include_router(generator.router, prefix="/api")
 app.include_router(generator.router)
 app.include_router(benchmarks.router, prefix="/api")
 app.include_router(benchmarks.router)
+app.include_router(repair.router, prefix="/api")
+app.include_router(repair.router)
 
 # --- Static mount and SPA fallback for frontend production build ---
 dist_path = Path("frontend/dist")

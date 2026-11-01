@@ -9,6 +9,7 @@ const NAV_ITEMS = [
   { to: "/viewer", label: "Timetable Viewer", icon: "🗓" },
   { to: "/validation", label: "Constraint Validation", icon: "🛡" },
   { to: "/comparison", label: "Algorithm Comparison", icon: "📈" },
+  { to: "/repair", label: "Timetable Repair", icon: "🔧" },
 ];
 
 export function Sidebar() {

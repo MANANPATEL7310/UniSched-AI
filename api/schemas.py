@@ -277,3 +277,65 @@ class SavedResultInfoModel(_M):
     created: str
     rows: int
 
+
+# --- Stage 6 Repair & Rescheduling Models ---
+
+class TimetableDraftModel(_M):
+    instance_name: str = "Untitled"
+    assignments: dict[str, list[Any]]  # sid -> [day, start_slot, room_id]
+
+
+class RepairChangeModel(_M):
+    type: Literal["teacher_unavailable", "room_unavailable"]
+    entity_id: str
+    day: int
+    slot: int
+
+
+class RepairRequestModel(_M):
+    draft: InstanceDraftModel
+    published: TimetableDraftModel
+    change: RepairChangeModel
+    lock_policy: Literal["strict", "relax_neighbors", "free"] = "relax_neighbors"
+    timeout_s: float = Field(15.0, ge=1.0, le=120.0)
+
+
+class SessionDiffModel(_M):
+    session_id: str
+    course_name: str
+    division_name: str
+    teacher_name: str
+    old_day: int | None = None
+    old_slot: int | None = None
+    old_room_id: str | None = None
+    new_day: int
+    new_slot: int
+    new_room_id: str
+    change_type: Literal["UNCHANGED", "MOVED_SLOT", "MOVED_ROOM", "MOVED_BOTH", "NEWLY_ASSIGNED"]
+
+
+class RepairResponseModel(_M):
+    status: str
+    outcome: RunOutcomeModel | None = None
+    diff: list[SessionDiffModel] = Field(default_factory=list)
+    relaxed_locks: list[str] = Field(default_factory=list)
+    change_penalty: int = 0
+    message: str = ""
+
+
+class SoftImproveRequestModel(_M):
+    draft: InstanceDraftModel
+    published: TimetableDraftModel
+    max_steps: int = Field(150, ge=1, le=500)
+    time_limit_s: float = Field(3.0, ge=0.5, le=30.0)
+
+
+class SoftImproveResponseModel(_M):
+    status: str
+    initial_penalty: float
+    improved_penalty: float
+    steps_accepted: int
+    outcome: RunOutcomeModel
+    message: str = ""
+
+

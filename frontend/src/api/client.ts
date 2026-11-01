@@ -4,10 +4,14 @@ import type {
   BenchmarkRow,
   GeneratorConfigDto,
   InstanceDraft,
+  RepairRequest,
+  RepairResponse,
   RunConfigDto,
   RunResponse,
   SampleInfo,
   SavedResultInfo,
+  SoftImproveRequest,
+  SoftImproveResponse,
   ValidateResponse,
 } from "./types.js";
 
@@ -177,8 +181,17 @@ export async function getSavedResult(name: string): Promise<BenchmarkRow[]> {
   return request<BenchmarkRow[]>(`/benchmarks/results/${encodeURIComponent(name)}`);
 }
 
-export async function repair(payload: unknown): Promise<unknown> {
-  return request<unknown>("/repair", {
+export async function repair(payload: RepairRequest): Promise<RepairResponse> {
+  return request<RepairResponse>("/repair", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}
+
+export async function improveSoftConstraints(
+  payload: SoftImproveRequest
+): Promise<SoftImproveResponse> {
+  return request<SoftImproveResponse>("/repair/improve-soft", {
     method: "POST",
     body: JSON.stringify(payload),
   });

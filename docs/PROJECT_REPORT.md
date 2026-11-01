@@ -284,13 +284,34 @@ Data collected from direct execution run (`results/20261101_141003.csv`):
 
 ---
 
-## 11. Conclusion & Future Scope
+## 11. Stage 6 Advanced Extensions (Implemented)
 
-UniSched-AI demonstrates that classical, symbolic Artificial Intelligence provides a mathematically rigorous, explainable, and 100% reliable framework for university course timetabling. By framing timetabling as a CSP with occupancy key representations and pairing the solver with an independent interval validator, the system eliminates the constraint violations and hallucinations inherent in machine learning approaches.
+To bridge the gap between static satisfiability and live real-world administrative operations, the system includes three advanced algorithmic extensions:
 
-### Future Scope
-* **Branch-and-Bound Soft Optimization:** Integrating soft penalty bounds directly into backtracking to prune suboptimal valid timetables.
-* **Minimal-Change Dynamic Rescheduling:** Adding interactive lock-and-repair mechanisms to reschedule disrupted sessions (e.g. sudden faculty illness) while minimizing changes to the existing published timetable.
+### 11.1 Minimal-Change Dynamic Rescheduling Engine (`scheduling/rescheduler.py`)
+When unanticipated operational disruptions occur (e.g. sudden faculty sickness or laboratory equipment failure at a specific day/slot), the rescheduler calculates an updated conflict-free timetable while minimizing perturbation to existing schedules:
+1. **Disruption Injection:** Accepts targeted perturbations (`TeacherUnavailableChange` or `RoomUnavailableChange`).
+2. **Locking Policies & Progressive Relaxation:**
+   * **Strict:** Freezes all unaffected sessions (`fixed = old_assignment`); only directly conflicted sessions are free to move.
+   * **Relax Neighbors (Progressive Rings):** If the strict problem is provably infeasible (`INFEASIBLE_PROVEN`), the engine automatically unfreezes the resource-sharing neighborhood (Ring 1: sessions sharing teacher/division/room; Ring 2: secondary neighbors) until a feasible repair is discovered.
+   * **Free:** All sessions are free to move, but distance heuristics prioritize preserving old positions.
+3. **Disruption Distance Metric:** Domain values for free sessions are ordered by ascending disruption distance:
+   $$\text{dist}(v, v_{old}) = \langle \mathbb{I}[day \neq day_{old}], |slot - slot_{old}|, \mathbb{I}[room \neq room_{old}] \rangle$$
+4. **Validation & Diff:** Computes a full session-by-session diff table and guarantees 0 hard conflicts via independent validation before publication.
+
+### 11.2 Soft-Constraint Local Optimization (`scheduling/soft_improvement.py`)
+Using hill-climbing local search and Min-Conflicts style value reassignments, this module optimizes secondary preferences (faculty gaps, division gaps, room stability) on top of an already valid timetable:
+* Evaluates single-session slot/room relocations and equal-duration pair swaps.
+* **Invariant:** Every proposed state change is verified by `validate_timetable`. A move is accepted if and only if hard constraint violations remain zero and total soft penalty strictly decreases.
+
+### 11.3 Search Tree Tracing (`csp/search_trace.py`)
+A telemetry hook recording discrete search events (`SELECT_VAR`, `TRY_VALUE`, `ASSIGN`, `PRUNE`, `WIPEOUT`, `BACKTRACK`) with depth and context notes, capped at 2,000 events to maintain zero overhead during standard benchmarking runs.
+
+---
+
+## 12. Conclusion
+
+UniSched-AI demonstrates that classical, symbolic Artificial Intelligence provides a mathematically rigorous, explainable, and 100% reliable framework for university course timetabling. By framing timetabling as a CSP with occupancy key representations, implementing multiple propagation regimes (Baseline, Heuristic, Forward Checking, MAC), and augmenting the solver with minimal-change repair and an independent interval validator, the system eliminates the constraint violations and hallucinations inherent in machine learning approaches.
 
 ---
 
@@ -300,3 +321,4 @@ UniSched-AI demonstrates that classical, symbolic Artificial Intelligence provid
 2. Mackworth, A. K. (1977). Consistency in networks of relations. *Artificial Intelligence*, 8(1), 99-118.
 3. Haralick, R. M., & Elliott, G. L. (1980). Increasing tree search efficiency for constraint satisfaction problems. *Artificial Intelligence*, 14(3), 263-313.
 4. Burke, E. K., & Petrovic, S. (2002). Recent research directions in automated timetabling. *European Journal of Operational Research*, 140(2), 266-280.
+

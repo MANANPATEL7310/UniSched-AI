@@ -55,6 +55,9 @@ def _extract_assignment_dict(
         for item in assignment:
             if isinstance(item, tuple) and len(item) == 2:
                 pairs.append((str(item[0]), item[1]))
+    elif hasattr(assignment, "assignment"):
+        raw = getattr(assignment, "assignment")
+        pairs = raw.items() if isinstance(raw, Mapping) else []
     elif hasattr(assignment, "assignments"):
         raw = getattr(assignment, "assignments")
         pairs = raw.items() if isinstance(raw, Mapping) else []

@@ -114,12 +114,31 @@ Open **`http://localhost:8000`** in your browser.
 
 ---
 
+### Step 8: Dynamic Rescheduling, Conflict Repair & Soft Optimization (Stage 6)
+
+1. **Navigate to the Repair Page:**
+   * Click **"Timetable Repair"** (🔧) in the left sidebar (`/repair`).
+2. **Inject an Unanticipated Disruption:**
+   * Select **Teacher Unavailable** or **Room Unavailable**.
+   * Pick a faculty member (e.g. `T_ALICE`), day (e.g. `Mon`), and slot (e.g. `09:00`) that currently has an active lecture.
+3. **Select Locking Strategy & Repair:**
+   * Choose **"Relax Neighbors (Progressive Rings)"**.
+   * Click **"⚡ Repair Timetable"**.
+   * Observe the solver: it freezes unaffected sessions, identifies the affected lecture, applies distance-based heuristic search, and relocates only the necessary sessions with minimal perturbation.
+   * Review the **Diff Table** highlighting old vs new slots and the independent validator green badge.
+   * Click **"✓ Publish Revised Timetable"** to push the updated schedule live to the Timetable Viewer.
+4. **Demonstrate Soft-Constraint Local Search:**
+   * Click **"🌱 Optimize Soft Constraints"**.
+   * Watch the hill-climbing local improver perform conflict-free reassignments and equal-duration swaps to compress gaps and reduce teacher idle time while strictly preserving zero hard constraint violations.
+
+---
+
 ## 🧪 Automated Test Suite Commands (For Viva Verification)
 
 If asked by an examiner to run the automated tests:
 
 ```bash
-# 1. Full Backend Test Suite (212 unit, engine, API, and hardening tests)
+# 1. Full Backend Test Suite (221 unit, engine, API, repair, and hardening tests)
 pytest
 
 # 2. Architectural Boundary Isolation Test
@@ -128,9 +147,13 @@ pytest tests/test_architecture.py
 # 3. Hardening & Adversarial Test Suite
 pytest tests/test_hardening.py
 
-# 4. Frontend Component & Accessibility Tests (91 tests across 23 test files)
+# 4. Stage 6 Minimal-Change Rescheduling & Soft Improvement Tests
+pytest tests/test_rescheduler.py tests/test_soft_improvement.py tests/test_repair_api.py
+
+# 5. Frontend Component & Accessibility Tests (93 tests across 24 test files)
 npm --prefix frontend test -- --run
 
-# 5. Production TypeScript Build
+# 6. Production TypeScript Build
 npm --prefix frontend run build
 ```
+

@@ -18,6 +18,7 @@ from csp.result import (
     SearchResult,
     SearchStatus,
 )
+from csp.search_trace import TraceEvent
 from csp.trail import DomainState
 from models.assignment import Assignment
 
@@ -54,6 +55,31 @@ class _Ctx:
         self.metrics = metrics
         self.t0 = t0
         self.propagating: bool = config.use_forward_checking or config.use_mac
+        self.trace: list[TraceEvent] = []
+        self.trace_truncated: bool = False
+
+    def emit_trace(
+        self,
+        kind: str,
+        session_id: str,
+        value_label: str = "",
+        note: str = "",
+    ) -> None:
+        """Record a trace event if trace recording is enabled and cap has not been reached."""
+        if not self.config.record_trace or self.trace_truncated:
+            return
+        if len(self.trace) >= 2000:
+            self.trace_truncated = True
+            return
+        self.trace.append(
+            TraceEvent(
+                kind=kind,
+                session_id=session_id,
+                value_label=value_label,
+                note=note,
+                depth=len(self.assignment),
+            )
+        )
 
     def disjoint(self, a: frozenset[OccupancyKey], b: set[OccupancyKey]) -> bool:
         """Count consistency check and test if occupancy keys are disjoint."""
@@ -112,10 +138,18 @@ def _search(ctx: _Ctx) -> bool:
         return True  # All variables successfully assigned
 
     sid = _select_variable_fn(ctx)
+    ctx.emit_trace(
+        "SELECT_VAR",
+        sid,
+        note=f"unassigned={len(ctx.problem.variables) - len(ctx.assignment)}",
+    )
     for i in _order_values_fn(ctx, sid):
         _check_limits(ctx)
         ctx.metrics.attempts += 1
         ks = ctx.problem.keys[sid][i]
+        asgn = ctx.problem.domains[sid][i]
+        val_label = f"Day {asgn.day} Slot {asgn.start_slot} Room {asgn.room_id}"
+        ctx.emit_trace("TRY_VALUE", sid, val_label)
 
         if not ctx.disjoint(ks, ctx.used):
             continue
@@ -123,6 +157,7 @@ def _search(ctx: _Ctx) -> bool:
         mark = ctx.state.checkpoint()
         ctx.assignment[sid] = i
         ctx.used |= ks
+        ctx.emit_trace("ASSIGN", sid, val_label)
 
         ok = True
         if ctx.config.use_mac and _mac_propagate_fn is not None:
@@ -138,6 +173,7 @@ def _search(ctx: _Ctx) -> bool:
         ctx.used -= ks
         ctx.state.restore(mark)
         ctx.metrics.backtracks += 1
+        ctx.emit_trace("BACKTRACK", sid, val_label)
 
     return False
 
@@ -227,4 +263,6 @@ def solve(
         metrics=metrics,
         config=cfg,
         message=msg,
+        trace=ctx.trace if cfg.record_trace else None,
+        trace_truncated=ctx.trace_truncated if cfg.record_trace else False,
     )

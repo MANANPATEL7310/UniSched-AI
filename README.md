@@ -63,7 +63,7 @@ The engine implements four progressive classical search configurations sharing a
 ├── api/                        # FastAPI REST API layer
 │   ├── jobs.py                 # Background thread JobManager (concurrency, TTL, cancel)
 │   ├── main.py                 # App entrypoint, CORS, exception handlers, SPA static mount
-│   ├── routers/                # Endpoints (/samples, /instances, /runs, /generator, /benchmarks)
+│   ├── routers/                # Endpoints (/samples, /instances, /runs, /generator, /benchmarks, /repair)
 │   ├── schemas.py              # Pydantic input models and request contracts
 │   └── serializers.py          # DTO converters ensuring NaN-free, sanitized JSON
 ├── csp/                        # Pure CSP Solver Engine (Standard Library Only)
@@ -76,6 +76,7 @@ The engine implements four progressive classical search configurations sharing a
 │   ├── mac.py                  # Maintaining Arc Consistency (MAC) search propagation
 │   ├── problem.py              # CSPProblem graph, adjacency lists, and neighbor indexing
 │   ├── result.py               # SearchStatus, SearchConfig, and SearchMetrics types
+│   ├── search_trace.py         # Search event telemetry and event tracking
 │   └── trail.py                # DomainState trail for deterministic checkpoint/restore
 ├── data/                       # Data management, loaders, schemas, and instances
 │   ├── generator.py            # Synthetic problem instance generator with planted solutions
@@ -89,7 +90,7 @@ The engine implements four progressive classical search configurations sharing a
 │   └── reports.py              # Automated matplotlib chart generation (runtime, nodes, backtracks)
 ├── frontend/                   # React 19 + TypeScript Single Page Application (SPA)
 │   ├── src/components/         # Layout, StatusBanner, WeekGrid, EditableTable, AvailabilityGrid
-│   ├── src/pages/              # Dashboard, DataManagement, Generate, Viewer, Validation, Comparison
+│   ├── src/pages/              # Dashboard, DataManagement, Generate, Viewer, Validation, Comparison, Repair
 │   ├── src/lib/                # Week grid layout engine, colors, explanations, status reducer
 │   └── src/tests/              # Comprehensive Vitest component and accessibility test suite
 ├── models/                     # Shared immutable domain dataclasses
@@ -102,14 +103,16 @@ The engine implements four progressive classical search configurations sharing a
 │   ├── teacher.py              # Faculty member constraints
 │   ├── timetable.py            # Solution Timetable, Entry formatting, and CSV export
 │   └── timeslot.py             # TimeGrid slot definitions
-├── scheduling/                 # Scheduling facade and independent validators
+├── scheduling/                 # Scheduling facade, rescheduler, and independent validators
+│   ├── rescheduler.py          # Minimal-change dynamic repair and progressive ring relaxation
 │   ├── scheduler.py            # generate_timetable facade and background RunHandle
 │   ├── soft_constraints.py     # Soft constraint evaluators (gaps, workload balance, preferences)
+│   ├── soft_improvement.py     # Hill-climbing local optimization with strict validity invariant
 │   └── timetable_validator.py  # Independent interval-arithmetic solution verifier
 ├── scripts/                    # Command-line utility scripts
 │   ├── export_fixture_outcome.py # Exports tiny run outcome for frontend test mocking
 │   └── run_small.py            # CLI tool to run algorithms A–D on sample instances
-└── tests/                      # Full automated test suite (192 unit/integration tests)
+└── tests/                      # Full automated test suite (221 unit, engine, API, and hardening tests)
 ```
 
 ---
