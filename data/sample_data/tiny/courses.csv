@@ -1,0 +1,4 @@
+course_id,course_name,teacher_id,sessions_per_week,duration_slots,room_types,eligible_divisions
+FAI,Foundation of AI,T01,2,1,lecture,A
+MATH,Discrete Math,T02,1,1,lecture,A;B
+PLAB,Python Lab,T03,1,1,computer_lab,A

@@ -1,2 +1,10 @@
 .DS_Store
 Planning/
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+results/
+frontend/dist/
+frontend/node_modules/

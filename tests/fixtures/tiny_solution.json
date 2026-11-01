@@ -1,0 +1,10 @@
+{
+  "instance_name": "tiny",
+  "assignments": {
+    "FAI|A|1": [0, 1, "R101"],
+    "FAI|A|2": [1, 0, "R101"],
+    "MATH|A|1": [1, 1, "R101"],
+    "MATH|B|1": [0, 0, "R102"],
+    "PLAB|A|1": [0, 2, "C101"]
+  }
+}
