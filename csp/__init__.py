@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 from csp.constraints import OccupancyKey, occupancy_keys, unary_ok
+from csp.domains import build_domains
+from csp.problem import CSPProblem, build_csp
 from csp.result import (
     PRESETS,
     ProgressState,
@@ -23,6 +25,10 @@ __all__ = [
     "OccupancyKey",
     "unary_ok",
     "occupancy_keys",
+    "build_domains",
+    "CSPProblem",
+    "build_csp",
 ]
+
 
 
