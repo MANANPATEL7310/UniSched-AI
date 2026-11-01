@@ -474,7 +474,7 @@ def instance_from_draft(draft: dict) -> SchedulingInstance:
         divisions=divisions_dict,
         courses=courses_dict,
         sessions=sessions,
-        meta={"source": draft.get("name")},
+        meta={"source": draft.get("name"), "fixed_session_ids": tuple(fixed_map.keys())},
     )
 
 
