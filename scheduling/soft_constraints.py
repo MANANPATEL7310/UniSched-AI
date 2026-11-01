@@ -240,3 +240,4 @@ def soft_penalty(
         total=total_weighted,
         details=details,
     )
+

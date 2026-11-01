@@ -80,3 +80,4 @@ describe("explanations module", () => {
     expect(infeasibleSentences.some((s) => s.includes("No valid timetable exists"))).toBe(true);
   });
 });
+
