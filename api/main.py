@@ -1,6 +1,7 @@
 """FastAPI main application entrypoint with middleware, error handlers, and routers."""
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
 import logging
 from pathlib import Path
 from typing import Any
@@ -12,7 +13,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 
-from api.routers import generator, instances, runs, samples
+from api.jobs import jobs
+from api.routers import benchmarks, generator, instances, runs, samples
 from errors import (
     BusyError,
     DataLoadError,
@@ -25,7 +27,14 @@ from errors import (
 logger = logging.getLogger("api")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
 
-app = FastAPI(title="Timetable CSP API", version="1.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    yield
+    jobs.cancel_all()
+
+
+app = FastAPI(title="Timetable CSP API", version="1.0", lifespan=lifespan)
 
 # CORS middleware for local frontend communication
 app.add_middleware(
@@ -113,6 +122,8 @@ app.include_router(instances.router, prefix="/api")
 app.include_router(runs.router, prefix="/api")
 app.include_router(generator.router, prefix="/api")
 app.include_router(generator.router)
+app.include_router(benchmarks.router, prefix="/api")
+app.include_router(benchmarks.router)
 
 # --- Optional static mount for frontend production build ---
 dist_path = Path("frontend/dist")

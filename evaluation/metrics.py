@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Any
 import pandas as pd
 
 from csp.problem import build_csp
-from csp.result import RunControl, SearchConfig, SearchStatus
+from csp.result import ProgressState, RunControl, SearchConfig, SearchStatus
 from scheduling.scheduler import generate_timetable
 
 if TYPE_CHECKING:
@@ -51,7 +51,7 @@ def run_once(
     If measure_memory is True, performs a separate second execution with tracemalloc
     so memory profiling overhead does not distort the reported runtime_s.
     """
-    control = RunControl(cancel_event=cancel_event) if cancel_event is not None else None
+    control = RunControl(cancel_event=cancel_event, progress=ProgressState()) if cancel_event is not None else None
     outcome = generate_timetable(instance, config, control=control)
 
     peak_memory_kb: float = float("nan")
