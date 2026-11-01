@@ -750,3 +750,71 @@ details.fai-details summary:hover {
     padding: 16px;
   }
 }
+
+/* Validation Page */
+.validation-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.validation-independent-caption {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin-top: 4px;
+}
+
+.validation-big-badge {
+  font-size: 1.15rem;
+  padding: 8px 20px;
+  border-radius: var(--radius-md);
+  letter-spacing: 0.05em;
+  font-weight: 800;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.validation-meta-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.sample-badge {
+  background-color: var(--status-orange-bg);
+  color: var(--status-orange-text);
+  border: 1px solid var(--status-orange-border);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.clickable-badge {
+  cursor: pointer;
+  border: none;
+  transition: transform 0.1s ease;
+}
+
+.clickable-badge:hover {
+  transform: scale(1.05);
+}
+
+.code-pill {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+

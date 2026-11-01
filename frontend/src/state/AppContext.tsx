@@ -16,13 +16,13 @@ import {
 } from "./reducer.js";
 import { saveDraftToStorage } from "./storage.js";
 
-interface AppContextValue {
+export interface AppContextValue {
   state: AppState;
   dispatch: Dispatch<Action>;
   canGenerate: boolean;
 }
 
-const AppContext = createContext<AppContextValue | null>(null);
+export const AppContext = createContext<AppContextValue | null>(null);
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, undefined, createInitialState);
@@ -59,3 +59,5 @@ export function useApp(): AppContextValue {
   }
   return ctx;
 }
+
+export const useAppContext = useApp;
